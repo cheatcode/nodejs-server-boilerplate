@@ -453,7 +453,11 @@ You can customize your settings file however you'd like. If you change names or 
 
 ### FAQ
 
-_No FAQ items Yet_.
+**Does this boilerplate work with Windows?**
+
+It should. The [`cross-env` package](https://npmjs.com/package/cross-env) is used to run the NPM scripts necessary for running the dev server, creating builds, and running tests.
+
+If something you expect to be supported is not on your platform, please [file a bug report on the Github repo](https://github.com/cheatcode/nodejs-server-boilerplate/issues/new).
 
 ### Contributing
 
