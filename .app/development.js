@@ -2,15 +2,17 @@
 
 import chalk from "chalk";
 import util from "util";
-import child_process from "child_process";
+import child_process, { spawn } from "child_process";
 import path from "path";
 import fs from "fs";
+import os from "os";
 import commandExists from "command-exists";
 import webpack from "webpack";
 import ps from "ps-node";
 import Loader from "./loader";
 import serverConfig from "../webpack.config";
 
+const isWindows = os.platform() === 'win32';
 const exec = util.promisify(child_process.exec);
 
 const handleCleanup = (processIds = []) => {
@@ -18,8 +20,8 @@ const handleCleanup = (processIds = []) => {
 
   processIds.forEach((processId) => {
     ps.kill(processId);
+    
   });
-
   process.exit();
 };
 
@@ -145,6 +147,10 @@ const getMongoProcessId = (stdout = null) => {
 };
 
 const startMongoDB = async () => {
+  const currentPath = process.cwd();
+  const mongodbWindowsCommand = `C:\\Program Files\\MongoDB\\Server\\4.4\\bin\\mongod`;
+  const mongodbMacCommand = 'mongod --port 27017 --dbpath ./.data/mongodb --quiet --fork --logpath ./.data/mongodb/log';
+
   process.loader.text("Starting MongoDB...");
 
   const dataDirectoryExists = fs.existsSync(".data/mongodb");
@@ -153,10 +159,12 @@ const startMongoDB = async () => {
     fs.mkdirSync(".data/mongodb", { recursive: true });
   }
 
-  const { stdout } = await exec(
-    "mongod --port 27017 --dbpath ./.data/mongodb --quiet --fork --logpath ./.data/mongodb/log"
-  );
+  if (isWindows) {
+    spawn(mongodbWindowsCommand, ['--dbpath', `${currentPath}/.data/mongodb`, '--quiet']);
+    return true;
+  }
 
+  const { stdout } = await exec(mongodbMacCommand);
   return getMongoProcessId(stdout);
 };
 
@@ -178,9 +186,8 @@ const developmentServer = async () => {
 
   if (mongodbExists) {
     const mongoProcessId = await startMongoDB();
-
     startWebpack();
-    handleSignalEvents([mongoProcessId]);
+    handleSignalEvents(isWindows ? [] : [mongoProcessId]);
   } else {
     process.loader.stop();
     warnMongoDBMissing();
