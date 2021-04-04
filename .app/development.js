@@ -147,10 +147,6 @@ const getMongoProcessId = (stdout = null) => {
 };
 
 const startMongoDB = async () => {
-  const currentPath = process.cwd();
-  const mongodbWindowsCommand = `C:\\Program Files\\MongoDB\\Server\\4.4\\bin\\mongod`;
-  const mongodbMacCommand = 'mongod --port 27017 --dbpath ./.data/mongodb --quiet --fork --logpath ./.data/mongodb/log';
-
   process.loader.text("Starting MongoDB...");
 
   const dataDirectoryExists = fs.existsSync(".data/mongodb");
@@ -160,11 +156,23 @@ const startMongoDB = async () => {
   }
 
   if (isWindows) {
+    const currentPath = process.cwd();
+    const mongodbVersions = fs.readdirSync(`C:\\Program Files\\MongoDB\\Server\\`).sort().reverse();
+    const latestMongodbVersion = mongodbVersions && mongodbVersions[0];
+
+    if (isWindows && mongodbVersions && mongodbVersions.length === 0) {
+      console.log(chalk.red("Couldn't find any MongoDB versions in C:\\Program Files\\MongoDB\\Server. Please double-check your MongoDB installation or re-install MongoDB and try again.\n"));
+      process.exit(1);
+      return;
+    }
+  
+    const mongodbWindowsCommand = `C:\\Program Files\\MongoDB\\Server\\${latestMongodbVersion}\\bin\\mongod`;
     spawn(mongodbWindowsCommand, ['--dbpath', `${currentPath}/.data/mongodb`, '--quiet']);
+
     return true;
   }
 
-  const { stdout } = await exec(mongodbMacCommand);
+  const { stdout } = await exec('mongod --port 27017 --dbpath ./.data/mongodb --quiet --fork --logpath ./.data/mongodb/log');
   return getMongoProcessId(stdout);
 };
 
