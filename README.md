@@ -11,15 +11,15 @@ Back-end boilerplate for building web applications, based on [Node.js](https://n
 2. [Getting Started](#getting-started)
 3. [File Structure](#file-structure)
 4. [Development Server](#development-server)
-    - [Webpack](#webpack)
-    - [MongoDB](#mongodb)
+   - [Webpack](#webpack)
+   - [MongoDB](#mongodb)
 5. [Express Server](#express-server)
-    - [Middleware](#middleware)
+   - [Middleware](#middleware)
 6. [GraphQL Server](#graphql-server)
-    - [Server](#server)
-    - [Schema](#schema)
-    - [MongoDB & GraphQL](#mongodb-graphql)
-    - [Fixtures](#fixtures)
+   - [Server](#server)
+   - [Schema](#schema)
+   - [MongoDB & GraphQL](#mongodb-graphql)
+   - [Fixtures](#fixtures)
 7. [Accounts](#accounts)
 8. [Settings](#settings)
 9. [FAQ](#faq)
@@ -334,7 +334,7 @@ While this can be anything you'd like, we recommend utilizing [CheatCode's Authe
 
 > **Note**: This generator will only generate a token once and DOES NOT persist it anywhere. Make sure to back up the tokens you use in a password manager like 1Password, LastPass, or other encrypted secrets tool (Hashicorp Vault).
 
-#### Signup 
+#### Signup
 
 User accounts are created using the following process:
 
@@ -455,9 +455,11 @@ You can customize your settings file however you'd like. If you change names or 
 
 **Does this boilerplate work with Windows?**
 
-It should. The [`cross-env` package](https://npmjs.com/package/cross-env) is used to run the NPM scripts necessary for running the dev server, creating builds, and running tests.
+Yes. v0.6.0 introduced proper support. The [`cross-env` package](https://npmjs.com/package/cross-env) is used to run the NPM scripts necessary for running the dev server, creating builds, and running tests.
 
 If something you expect to be supported is not on your platform, please [file a bug report on the Github repo](https://github.com/cheatcode/nodejs-server-boilerplate/issues/new).
+
+> **Note**: Current Windows testing is only being done on Windows 10.
 
 ### Contributing
 
