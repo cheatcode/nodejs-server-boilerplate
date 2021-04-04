@@ -3,9 +3,9 @@
   "description": "",
   "main": "./dist/index.js",
   "scripts": {
-    "reset": "chmod +x ./.app/reset.js && cross-env NODE_ENV=development node -r @babel/register ./.app/reset.js",
+    "reset": "cross-env NODE_ENV=development node -r @babel/register ./.app/reset.js",
     "start": "node ./dist/index.js",
-    "dev": "chmod +x ./.app/development.js && cross-env NODE_ENV=development node -r @babel/register ./.app/development.js",
+    "dev": "cross-env NODE_ENV=development node -r @babel/register ./.app/development.js",
     "build": "cross-env NODE_ENV=production node -r @babel/register ./node_modules/webpack/bin/webpack",
     "test": "jest",
     "test-watch": "jest --watch"
