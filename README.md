@@ -22,9 +22,10 @@ Back-end boilerplate for building web applications, based on [Node.js](https://n
    - [Fixtures](#fixtures)
 7. [Accounts](#accounts)
 8. [Settings](#settings)
-9. [FAQ](#faq)
-10. [Contributing](#contributing)
-11. [License](#license)
+9. [Fixtures](#fixtures)
+10. [FAQ](#faq)
+11. [Contributing](#contributing)
+12. [License](#license)
 
 ### Who is This For?
 
@@ -96,7 +97,8 @@ The following file tree describes the full structure of this boilerplate:
 │   │   │   └── types.js
 │   │   └── index.js
 │   ├── /fixtures
-│   │   └── users.js
+│   │   ├── users.js
+│   │   └── index.js
 │   ├── /graphql
 │   │   ├── schema.js
 │   │   └── server.js
@@ -450,6 +452,46 @@ const getConnectionOptions = () => {
 ```
 
 You can customize your settings file however you'd like. If you change names or locations of settings, make sure to update the paths in your source code (e.g., in the MongoDB example above, `settings.databases.mongodb` must be defined in order for your MongoDB connection to work).
+
+### Fixtures
+
+To aid in the development process, the boilerplate includes an example fixture (a function for generating test data in your app) for the users collection. This creates a single user with the email address `admin@admin.com` and a password of `password`.
+
+```javascript
+import _ from "lodash";
+import Users from "../users";
+import signup from "../users/signup";
+
+const users = [
+  {
+    emailAddress: "admin@admin.com",
+    password: "password",
+    name: {
+      first: "Thomas",
+      last: "Sowell",
+    },
+  },
+];
+
+export default async () => {
+  let i = 0;
+
+  while (i < users.length) {
+    const userToInsert = users[i];
+    const existingUser = await Users.findOne({
+      emailAddress: userToInsert.emailAddress,
+    });
+
+    if (!existingUser) {
+      await signup(userToInsert);
+    }
+
+    i += 1;
+  }
+};
+```
+
+Fixture functions are imported into `/api/fixtures/index.js`. _This_ file (`/api/fixtures/index.js`) is then imported into the `/lib/startup.js` file to ensure that fixtures run on server startup.
 
 ### FAQ
 
