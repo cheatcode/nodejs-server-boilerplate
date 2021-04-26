@@ -65,7 +65,7 @@ export default {
     }).then((response) => {
       const { user, token, tokenExpiresAt } = response;
       setAuthenticationCookie(context.res, { token, tokenExpiresAt });
-      return user;
+      return true;
     });
   },
   logout: (parent, args, context) => {

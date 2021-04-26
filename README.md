@@ -11,20 +11,21 @@ Back-end boilerplate for building web applications, based on [Node.js](https://n
 2. [Getting Started](#getting-started)
 3. [File Structure](#file-structure)
 4. [Development Server](#development-server)
-    - [Webpack](#webpack)
-    - [MongoDB](#mongodb)
+   - [Webpack](#webpack)
+   - [MongoDB](#mongodb)
 5. [Express Server](#express-server)
-    - [Middleware](#middleware)
+   - [Middleware](#middleware)
 6. [GraphQL Server](#graphql-server)
-    - [Server](#server)
-    - [Schema](#schema)
-    - [MongoDB & GraphQL](#mongodb-graphql)
-    - [Fixtures](#fixtures)
+   - [Server](#server)
+   - [Schema](#schema)
+   - [MongoDB & GraphQL](#mongodb-graphql)
+   - [Fixtures](#fixtures)
 7. [Accounts](#accounts)
 8. [Settings](#settings)
-9. [FAQ](#faq)
-10. [Contributing](#contributing)
-11. [License](#license)
+9. [Fixtures](#fixtures)
+10. [FAQ](#faq)
+11. [Contributing](#contributing)
+12. [License](#license)
 
 ### Who is This For?
 
@@ -96,7 +97,8 @@ The following file tree describes the full structure of this boilerplate:
 │   │   │   └── types.js
 │   │   └── index.js
 │   ├── /fixtures
-│   │   └── users.js
+│   │   ├── users.js
+│   │   └── index.js
 │   ├── /graphql
 │   │   ├── schema.js
 │   │   └── server.js
@@ -334,7 +336,7 @@ While this can be anything you'd like, we recommend utilizing [CheatCode's Authe
 
 > **Note**: This generator will only generate a token once and DOES NOT persist it anywhere. Make sure to back up the tokens you use in a password manager like 1Password, LastPass, or other encrypted secrets tool (Hashicorp Vault).
 
-#### Signup 
+#### Signup
 
 User accounts are created using the following process:
 
@@ -451,9 +453,55 @@ const getConnectionOptions = () => {
 
 You can customize your settings file however you'd like. If you change names or locations of settings, make sure to update the paths in your source code (e.g., in the MongoDB example above, `settings.databases.mongodb` must be defined in order for your MongoDB connection to work).
 
+### Fixtures
+
+To aid in the development process, the boilerplate includes an example fixture (a function for generating test data in your app) for the users collection. This creates a single user with the email address `admin@admin.com` and a password of `password`.
+
+```javascript
+import _ from "lodash";
+import Users from "../users";
+import signup from "../users/signup";
+
+const users = [
+  {
+    emailAddress: "admin@admin.com",
+    password: "password",
+    name: {
+      first: "Thomas",
+      last: "Sowell",
+    },
+  },
+];
+
+export default async () => {
+  let i = 0;
+
+  while (i < users.length) {
+    const userToInsert = users[i];
+    const existingUser = await Users.findOne({
+      emailAddress: userToInsert.emailAddress,
+    });
+
+    if (!existingUser) {
+      await signup(userToInsert);
+    }
+
+    i += 1;
+  }
+};
+```
+
+Fixture functions are imported into `/api/fixtures/index.js`. _This_ file (`/api/fixtures/index.js`) is then imported into the `/lib/startup.js` file to ensure that fixtures run on server startup.
+
 ### FAQ
 
-_No FAQ items Yet_.
+**Does this boilerplate work with Windows?**
+
+Yes. v0.6.0 introduced proper support. The [`cross-env` package](https://npmjs.com/package/cross-env) is used to run the NPM scripts necessary for running the dev server, creating builds, and running tests.
+
+If something you expect to be supported is not on your platform, please [file a bug report on the Github repo](https://github.com/cheatcode/nodejs-server-boilerplate/issues/new).
+
+> **Note**: Current Windows testing is only being done on Windows 10.
 
 ### Contributing
 
