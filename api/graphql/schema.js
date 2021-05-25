@@ -1,4 +1,5 @@
 import gql from "graphql-tag";
+import { makeExecutableSchema } from "@graphql-tools/schema";
 
 import DocumentTypes from "../documents/graphql/types";
 import DocumentQueries from "../documents/graphql/queries";
@@ -47,4 +48,4 @@ const schema = {
   },
 };
 
-export default schema;
+export default makeExecutableSchema(schema);

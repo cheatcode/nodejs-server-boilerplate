@@ -38,6 +38,7 @@
     "webpack-node-externals": "^2.5.2"
   },
   "dependencies": {
+    "@graphql-tools/schema": "^7.1.5",
     "apollo-server-express": "^2.20.0",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",

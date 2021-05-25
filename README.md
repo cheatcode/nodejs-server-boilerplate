@@ -249,7 +249,7 @@ import { configuration as corsConfiguration } from "../../middleware/cors";
 
 export default (app) => {
   const server = new ApolloServer({
-    ...schema,
+    schema,
     introspection: isDevelopment,
     playground: isDevelopment,
     context: async ({ req, res }) => {
@@ -286,6 +286,8 @@ Inside of this file, the GraphQL server is initialized using the Apollo Server l
 - `user` - If an `app_login_token` cookie is present (signifying a previously logged in user is making the request), the user associated with that token is set on the context for access in your GraphQL resolvers.
 
 In addition to setting the context, the GraphQL schema is also loaded for your app. The configuration for this is located in `/api/graphql/schema.js` and explained in the next section of this documentation.
+
+> **Note**: Although `apollo-server` will technically pass the `typeDefs` and `resolvers` properties that you set in the options passed to `new ApolloServer()` through the `@graphql-tools/schema` package's `makeExecutableSchema()` function, we've used an alternative approach here to add clarity. `makeExecutableSchema` is imported into your `/api/graphql/schema.js` file directly from `@graphql-tools/schema` and used to wrap the schema object at the bottom of the file. Not only does this add clarity, but it also ensures that any GraphQL middleware will be able to utilize your schema, too.
 
 Once the Apollo Server is configured, finally, we attach it to the already running Express server using the Apollo server's `applyMiddleware()` method.
 
