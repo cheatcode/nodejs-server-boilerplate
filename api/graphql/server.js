@@ -6,7 +6,7 @@ import { configuration as corsConfiguration } from "../../middleware/cors";
 
 export default (app) => {
   const server = new ApolloServer({
-    ...schema,
+    schema,
     introspection: isDevelopment,
     playground: isDevelopment,
     context: async ({ req, res }) => {
