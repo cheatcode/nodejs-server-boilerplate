@@ -39,7 +39,6 @@ const validateOptions = (options) => {
 
 const generatePasswordResetToken = async (options, { resolve, reject }) => {
   try {
-    console.log({ options });
     validateOptions(options);
 
     const token = crypto.randomString(32);
