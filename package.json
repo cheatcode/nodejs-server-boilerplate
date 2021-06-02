@@ -58,7 +58,6 @@
     "nodemailer": "^6.5.0",
     "ps-node": "^0.1.6",
     "serve-favicon": "^2.5.0",
-    "speakingurl": "^14.0.1",
-    "synchronized-promise": "^0.3.1"
+    "speakingurl": "^14.0.1"
   }
 }
