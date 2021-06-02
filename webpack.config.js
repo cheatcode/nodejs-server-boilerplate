@@ -9,6 +9,9 @@ module.exports = {
   mode: process.env.NODE_ENV,
   target: "node",
   externals: [nodeExternals()],
+  experiments: {
+    topLevelAwait: true,
+  },
   entry: "./index.js",
   output: {
     filename: "index.js",
