@@ -1,10 +1,10 @@
-import webpack from "webpack";
-import fs from "fs";
-import path from "path";
-import nodeExternals from "webpack-node-externals";
-import { CleanWebpackPlugin } from "clean-webpack-plugin";
+const webpack = require("webpack");
+const fs = require("fs");
+const path = require("path");
+const nodeExternals = require("webpack-node-externals");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
-export default {
+module.exports = {
   stats: "none",
   mode: process.env.NODE_ENV,
   target: "node",

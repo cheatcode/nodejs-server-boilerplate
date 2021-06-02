@@ -6,7 +6,7 @@
     "reset": "cross-env NODE_ENV=development node -r @babel/register ./.app/reset.js",
     "start": "node ./dist/index.js",
     "dev": "cross-env NODE_ENV=development node -r @babel/register ./.app/development.js",
-    "build": "cross-env NODE_ENV=production node -r @babel/register ./node_modules/webpack/bin/webpack",
+    "build": "cross-env NODE_ENV=production webpack --config webpack.config.js",
     "test": "jest",
     "test-watch": "jest --watch"
   },
