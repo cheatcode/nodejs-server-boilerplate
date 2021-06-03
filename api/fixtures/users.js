@@ -1,4 +1,3 @@
-import _ from "lodash";
 import Users from "../users";
 import signup from "../users/signup";
 

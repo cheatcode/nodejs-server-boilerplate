@@ -460,7 +460,6 @@ You can customize your settings file however you'd like. If you change names or 
 To aid in the development process, the boilerplate includes an example fixture (a function for generating test data in your app) for the users collection. This creates a single user with the email address `admin@admin.com` and a password of `password`.
 
 ```javascript
-import _ from "lodash";
 import Users from "../users";
 import signup from "../users/signup";
 

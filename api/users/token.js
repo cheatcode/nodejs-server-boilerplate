@@ -1,6 +1,5 @@
 /* eslint-disable consistent-return */
 
-import _ from "lodash";
 import validateLoginToken from "./validateLoginToken";
 import decryptLoginToken from "./decryptLoginToken";
 import getExistingUserByEmailPassword from "./getExistingUserByEmailPassword";
