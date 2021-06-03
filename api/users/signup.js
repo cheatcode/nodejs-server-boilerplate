@@ -1,6 +1,5 @@
 /* eslint-disable consistent-return */
 
-import _ from "lodash";
 import Users from "./index";
 import hashString from "./hashString";
 import encryptLoginToken from "./encryptLoginToken";
