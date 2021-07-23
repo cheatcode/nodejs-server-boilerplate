@@ -4,7 +4,7 @@ import { isDevelopment } from "../../.app/environment";
 import loginWithToken from "../users/token";
 import { configuration as corsConfiguration } from "../../middleware/cors";
 
-export default (app) => {
+export default async (app) => {
   const server = new ApolloServer({
     schema,
     introspection: isDevelopment,
@@ -27,6 +27,8 @@ export default (app) => {
       return context;
     },
   });
+
+  await server.start();
 
   server.applyMiddleware({
     cors: corsConfiguration,
