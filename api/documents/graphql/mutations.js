@@ -37,7 +37,6 @@ export default {
   },
   deleteDocument: async (parent, args, context) => {
     await isDocumentOwner(args.documentId, context.user._id);
-
-    await Documents.removeOne({ _id: args.documentId });
+    await Documents.deleteOne({ _id: args.documentId });
   },
 };
