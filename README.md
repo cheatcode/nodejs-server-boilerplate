@@ -4,6 +4,10 @@
 
 Back-end boilerplate for building web applications, based on [Node.js](https://nodejs.org).
 
+[Join the Discord](https://discord.gg/UTy4Fpy)
+
+---
+
 ### Table of Contents
 
 0. [Who is This For?](#who-is-this-for)
